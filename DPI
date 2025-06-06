@@ -79,3 +79,102 @@
   </script>
 </body>
 </html>
+# Create a simple HTML page with CSS and JavaScript to display DPI categories and their requirements
+
+html_content = """
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPI per Attività a Bordo di una Nave</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        select {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f4f4f4;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>DPI per Attività a Bordo di una Nave</h1>
+    <label for="activity">Seleziona un'attività:</label>
+    <select id="activity" onchange="showDPI()">
+        <option value="">--Seleziona un'attività--</option>
+        <option value="accesso">Accesso a bordo</option>
+        <option value="saldatura">Attività di saldatura</option>
+        <option value="quota">Lavori in quota</option>
+        <option value="molatura">Attività di molatura</option>
+    </select>
+    <h2>DPI richiesti:</h2>
+    <ul id="dpi-list"></ul>
+
+    <script>
+        const dpiData = {
+            "accesso": [
+                "Casco di sicurezza",
+                "Scarpe antinfortunistiche",
+                "Guanti protettivi",
+                "Occhiali di protezione"
+            ],
+            "saldatura": [
+                "Maschera da saldatura",
+                "Guanti da saldatura",
+                "Grembiule ignifugo",
+                "Scarpe antinfortunistiche"
+            ],
+            "quota": [
+                "Imbracatura di sicurezza",
+                "Casco di sicurezza",
+                "Scarpe antinfortunistiche",
+                "Corda di sicurezza"
+            ],
+            "molatura": [
+                "Occhiali di protezione",
+                "Maschera antipolvere",
+                "Guanti protettivi",
+                "Cuffie antirumore"
+            ]
+        };
+
+        function showDPI() {
+            const activity = document.getElementById("activity").value;
+            const dpiList = document.getElementById("dpi-list");
+            dpiList.innerHTML = "";
+
+            if (activity && dpiData[activity]) {
+                dpiData[activity].forEach(dpi => {
+                    const li = document.createElement("li");
+                    li.textContent = dpi;
+                    dpiList.appendChild(li);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+"""
+
+# Save the HTML content to a file
+with open("dpi_nave.html", "w") as file:
+    file.write(html_content)
+
+print("Il file HTML è stato creato con successo come 'dpi_nave.html'.")
+
