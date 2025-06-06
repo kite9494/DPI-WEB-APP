@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>DPI Multilingua</title>
+</head>
+<body>
+  <h1>Seleziona lingua e attività</h1>
+
+  <label for="language">Lingua:</label>
+  <select id="language">
+    <option value="it">Italiano</option>
+    <option value="en">English</option>
+    <option value="bn">বাংলা</option>
+    <option value="ro">Română</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="zh">中文</option>
+  </select>
+
+  <label for="activity">Attività:</label>
+  <select id="activity"></select>
+
+  <h2>DPI richiesti:</h2>
+  <ul id="dpi-list"></ul>
+
+  <script>
+    const dpiData = {
+      it: {
+        categories: {
+          accesso: "Accesso a bordo",
+          saldatura: "Saldatura",
+          quota: "Lavori in quota",
+          molatura: "Molatura"
+        },
+        dpi: {
+          accesso: ["Casco", "Scarpe antinfortunistiche", "Guanti"],
+          saldatura: ["Maschera da saldatore", "Guanti ignifughi", "Grembiule ignifugo"],
+          quota: ["Imbracatura", "Casco", "Scarpe antinfortunistiche"],
+          molatura: ["Occhiali", "Maschera antipolvere", "Guanti"]
+        }
+      },
+      // Altre lingue qui...
+    };
+
+    const languageSelect = document.getElementById("language");
+    const activitySelect = document.getElementById("activity");
+    const dpiList = document.getElementById("dpi-list");
+
+    function updateActivities() {
+      const lang = languageSelect.value;
+      const categories = dpiData[lang].categories;
+      activitySelect.innerHTML = "";
+      for (const key in categories) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = categories[key];
+        activitySelect.appendChild(option);
+      }
+      updateDPI();
+    }
+
+    function updateDPI() {
+      const lang = languageSelect.value;
+      const activity = activitySelect.value;
+      const dpis = dpiData[lang].dpi[activity] || [];
+      dpiList.innerHTML = "";
+      dpis.forEach(dpi => {
+        const li = document.createElement("li");
+        li.textContent = dpi;
+        dpiList.appendChild(li);
+      });
+    }
+
+    languageSelect.addEventListener("change", updateActivities);
+    activitySelect.addEventListener("change", updateDPI);
+
+    updateActivities(); // inizializza
+  </script>
+</body>
+</html>
